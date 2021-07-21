@@ -1,26 +1,47 @@
 import { graphql, useStaticQuery } from "gatsby"
 import * as React from "react"
+import HeaderSimpleCentered from "../components/HeaderSimpleCentered"
+import BlogSummary from "../components/BlogSummary"
 
 // markup
 const IndexPage = () => {
-  return (
-    <h1>All posts</h1>
-  )
-}
 
-// fetch All blog posts
-
-const AllBlogPosts = useStaticQuery(graphql`
+  const data = useStaticQuery(graphql`
   query MyQuery {
     allContentfulBlogPost {
       edges {
         node {
           title
           slug
+          publishDate(formatString: "MMMM Do, YYYY")
+          author {
+            name
+          }
+          body {
+            childrenMarkdownRemark {
+              excerpt
+            }
+          }
         }
       }
     }
   }
 `)
+
+  return (
+    <div>
+      <HeaderSimpleCentered></HeaderSimpleCentered>
+      <div className="container mx-auto flex flex-wrap py-6">
+        <section className="w-full md:w-2/3 flex flex-col items-center px-3">
+          {data.allContentfulBlogPost.edges.map(({ node }) => {
+            return (
+              <BlogSummary node={node}></BlogSummary>
+            )
+          })}
+        </section>
+      </div>
+    </div>
+  )
+}
 
 export default IndexPage

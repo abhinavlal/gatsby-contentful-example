@@ -27,9 +27,16 @@
     "gatsby-plugin-sitemap": "^4.5.0",
     "gatsby-source-contentful": "^5.9.0",
     "gatsby-source-filesystem": "^3.9.0",
+    "gatsby-transformer-remark": "^4.7.0",
     "gatsby-transformer-sharp": "^3.9.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.3.1",
+    "gatsby-plugin-postcss": "^4.10.0",
+    "postcss": "^8.3.5",
+    "tailwindcss": "^2.2.4"
   }
 }

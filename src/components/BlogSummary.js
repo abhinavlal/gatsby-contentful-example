@@ -1,7 +1,6 @@
 import React from "react"
 
 export default function BlogSummary(props) {
-    console.log(props.node)
     return (
         <article className="flex flex-col shadow my-4">
             <div className="bg-white flex flex-col justify-start p-6">

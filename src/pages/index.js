@@ -11,6 +11,7 @@ const IndexPage = () => {
     allContentfulBlogPost {
       edges {
         node {
+          id
           title
           slug
           publishDate(formatString: "MMMM Do, YYYY")
@@ -35,7 +36,7 @@ const IndexPage = () => {
         <section className="w-full md:w-2/3 flex flex-col items-center px-3">
           {data.allContentfulBlogPost.edges.map(({ node }) => {
             return (
-              <BlogSummary node={node}></BlogSummary>
+              <BlogSummary node={node} key={node.id}></BlogSummary>
             )
           })}
         </section>

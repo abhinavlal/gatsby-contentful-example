@@ -7,7 +7,7 @@ import BlogSummary from "../components/BlogSummary"
 const IndexPage = () => {
 
   const data = useStaticQuery(graphql`
-  query MyQuery {
+  query allPosts {
     allContentfulBlogPost {
       edges {
         node {

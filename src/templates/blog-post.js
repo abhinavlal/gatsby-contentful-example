@@ -1,10 +1,38 @@
 import React from "react"
-import { graphql } from "gatsby"
-import HeaderSimpleCentered from "../components/HeaderSimpleCentered"
+import { graphql, useStaticQuery } from "gatsby"
+import HeaderSimpleCentered from "../components/samples/HeaderSimpleCentered"
 
-export default function BlogPost({data}){
+export default function BlogPost(){
+    
+    const data = useStaticQuery(graphql`
+        query BlogbySlug($slug: String!) {
+            allContentfulBlogPost(filter: {slug: {eq: $slug}}) {
+                nodes {
+                    id
+                    title
+                    tags
+                    publishDate(formatString: "MMM Do, YYYY")
+                    heroImage {
+                        resize(width: 800) {
+                            src
+                        }
+                    }
+                    author {
+                        name
+                    }
+                    body {
+                        childMarkdownRemark {
+                            html
+                        }
+                    }
+                    slug
+                }
+            }
+        }
+    `)
+    
     const post = data.allContentfulBlogPost.nodes[0]
-    console.log(post)
+
     return (
         <div className="wrapper">
             <HeaderSimpleCentered></HeaderSimpleCentered>
@@ -21,29 +49,3 @@ export default function BlogPost({data}){
     )
 }
 
-export const query = graphql`
-query BlogbySlug($slug: String!) {
-    allContentfulBlogPost(filter: {slug: {eq: $slug}}) {
-        nodes {
-            id
-            title
-            tags
-            publishDate(formatString: "MMM Do, YYYY")
-            heroImage {
-                resize(width: 800) {
-                    src
-                }
-            }
-            author {
-                name
-            }
-            body {
-                childMarkdownRemark {
-                    html
-                }
-            }
-            slug
-        }
-    }
-}
-`

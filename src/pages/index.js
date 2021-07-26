@@ -1,48 +1,47 @@
-import { graphql, useStaticQuery } from "gatsby"
+import { graphql } from "gatsby"
 import * as React from "react"
-import HeaderSimpleCentered from "../components/HeaderSimpleCentered"
-import BlogSummary from "../components/BlogSummary"
+import HeaderSimpleCentered from "../components/samples/HeaderSimpleCentered"
+import { Link } from "@reach/router"
+
 
 // markup
-const IndexPage = () => {
+const IndexPage = ({data}) => {
 
-  const data = useStaticQuery(graphql`
-  query allPosts {
-    allContentfulBlogPost {
-      edges {
-        node {
-          id
-          title
-          slug
-          publishDate(formatString: "MMMM Do, YYYY")
-          author {
-            name
-          }
-          body {
-            childrenMarkdownRemark {
-              excerpt
-            }
-          }
-        }
-      }
-    }
-  }
-`)
+    const landingPages = data.allContentfulLandingPage.edges
 
-  return (
-    <div>
-      <HeaderSimpleCentered></HeaderSimpleCentered>
-      <div className="container mx-auto flex flex-wrap py-6">
-        <section className="w-full md:w-2/3 flex flex-col items-center px-3">
-          {data.allContentfulBlogPost.edges.map(({ node }) => {
-            return (
-              <BlogSummary node={node} key={node.id}></BlogSummary>
-            )
-          })}
-        </section>
-      </div>
-    </div>
-  )
+    return (
+        <div>
+            <HeaderSimpleCentered></HeaderSimpleCentered>
+            <div className="bg-white">
+                 <div className="max-w-7xl py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+                    <div className="text-left">
+                        <ul className="px-0">
+                            {data.allContentfulLandingPage.edges.map(({node}) => {
+                                return(
+                                    <Link to={node.slug}>
+                                    <li className="border list-none rounded-sm px-3 py-3 text-blue-600">{node.title}</li> 
+                                    </Link>
+                                )
+                            })}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default IndexPage
+
+export const query = graphql`
+    query MyQuery {
+        allContentfulLandingPage {
+            edges {
+                node {
+                    id
+                    title
+                    slug
+                }
+            }
+        }
+    }`

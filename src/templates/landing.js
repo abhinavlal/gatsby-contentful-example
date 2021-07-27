@@ -59,7 +59,6 @@ export default function Landing({data}){
             </header>
             <article className="flex flex-col shadow my-4">
                 <div className="bg-white flex flex-col justify-start p-6">
-                    <a href={page.slug} className="text-3xl font-bold hover:text-gray-700 pb-4">{page.title}</a>
                     {page.sections.map(  section  => {
                         return (
                             <div key={section.id}>
